@@ -53,6 +53,7 @@ FUNCTION make_lune,lra,ura,ldec,udec,weight=weight
   ;MAD Use all of the caps
   region.use_caps=15
   region.weight=weight
+  region.str=garea(region)
 
   return,region
 END
