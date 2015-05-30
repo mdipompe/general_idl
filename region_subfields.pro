@@ -7,12 +7,12 @@
 ;    some error in this that increases as the field size increases,
 ;    since the COS(dec) term is taken at the center of the fields).
 ;
-;    Since the number needs to be an integer, also specify a minimum
+;    Since the number needs to be an integer, can also specify a minimum
 ;    desired overlap between regions, and the code will get as close
 ;    to that as possible while covering the whole field.  
 ;
 ;  USE:
-;    region_subfields,ldec,udec,lra,ura,field_size,overlap,fields,centers,outpoly='fields.ply',outcenter='centers.txt',plotout='out.png'
+;    region_subfields,ldec,udec,lra,ura,field_size,fields,centers,overlap=overlap,outpoly='fields.ply',outcenter='centers.txt',plotout='out.png'
 ;
 ;  INPUT:
 ;    ldec - the lower DEC limit of the region (degrees)
@@ -20,7 +20,6 @@
 ;    lra - the lower RA limit of the region (degrees)
 ;    ura - the upper RA limit of the region (degrees)
 ;    field_size - the subfield size (assumed to be square, in deg)
-;    overlap - the minimum desired overlap between fields (degrees)
 ;
 ;  OPTIONAL INPUT:
 ;    outpoly - specify an output file name and Mangle polygons of the
@@ -28,6 +27,8 @@
 ;    outcenter - specify an output file name and a list of field
 ;                centers will be written to a text file
 ;    plotout - string name of plot output
+;    overlap - the minimum desired overlap between fields.  Defaults
+;              to 0
 ;
 ;  KEYWORDS:        
 ;
@@ -41,15 +42,17 @@
 ;    2-6-13 - Written - MAD (UWyo)
 ;    5-29-15 - Cleaned and documented - MAD (Uwyo)
 ;-
-PRO region_subfields,lra,ura,ldec,udec,field_size,overlap,fields,centers,outpoly=outpoly,outcenter=outcenter,plotout=plotout
+PRO region_subfields,lra,ura,ldec,udec,field_size,fields,centers,overlap=overlap,outpoly=outpoly,outcenter=outcenter,plotout=plotout
 
 ;MAD Get start time
 st=timer()
 
+IF ~keyword_set(overlap) THEN overlap=0.
+
 ;MAD Make polygon for whole survey footprint
 full_foot=make_lune(lra,ura,ldec,udec)
 ;plot_poly,full_foot,color=cgcolor('yellow')
-print,'The footprint is ',strtrim(full_foot.str*((180./!dpi)^2.),2),' square degrees'
+print,'REGION_SUBFIELDS - The footprint is ',strtrim(full_foot.str*((180./!dpi)^2.),2),' square degrees'
 
 ;MAD Call n_fields.pro to find number of fields needed in each direction
 n_fields=n_fields(lra,ura,ldec,udec,field_size,overlap)
@@ -106,8 +109,10 @@ IF keyword_set(plotout) THEN BEGIN
    nice_plot,lra-1.,ura+1., ldec-1., udec+1,xtit='RA',ytit='Dec'
    plot_poly,full_foot,/over,color=cgcolor('red'),outline_thick=2
    plot_poly,fields,/over,color=cgcolor('blue'),outline_thick=0.5
-   readcol,outcenter,centra,centdec,format='F'
-   oplot,centra,centdec,psym=1,thick=2,color=cgcolor('green')
+   IF keyword_set(outcenter) THEN BEGIN
+      readcol,outcenter,centra,centdec,format='F'
+      oplot,centra,centdec,psym=1,thick=2,color=cgcolor('green')
+   ENDIF
    PS_end,/png
 ENDIF
 
