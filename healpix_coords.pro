@@ -26,7 +26,7 @@ PRO healpix_coords,nside,long,lat,coord=coord,outfile=outfile
 
 IF ~keyword_set(coord) THEN coord='G'
 
-npix=12D*nside^2
+npix=12.D*(nside^2.)
 pixnum=lindgen(npix)
 pix2ang_nest,nside,pixnum,theta,phi
 
