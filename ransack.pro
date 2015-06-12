@@ -22,6 +22,10 @@
 ;
 ;OUTPUTS
 ;
+;NOTES
+;   Must have environment variable MANGLEBINDIR set to location
+;   of MANGLE binaries
+;
 ;HISTORY
 ;   1-5-15 - Written - MAD (UWyo)
 ;-
@@ -34,9 +38,12 @@ ENDIF
 
 ;MAD Make string command to run
 
-cmd=[filepath('ransack', root_dir=getenv('IDLUTILS_DIR'), $
-     subdir='bin'),'-c',strtrim(seed,2), '-r',strtrim(n,2),$
+cmd=[filepath('ransack', root_dir=getenv('MANGLEBINDIR')), $
+     '-c',strtrim(seed,2), '-r',strtrim(n,2),$
      polyfile,outfile]
+
+print,'Running RANSACK with command: '
+print,cmd
 
 spawn,cmd,/noshell
 
