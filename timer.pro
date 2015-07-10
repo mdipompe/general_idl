@@ -10,7 +10,7 @@
 ;  INPUT:
 ;    
 ;  OPTIONAL INPUT:
-;    st - the start time of the code, needed if /end is set and you
+;    st - the start time of the code, needed if /fin is set and you
 ;         want to get the elapsed time    
 ;
 ;  KEYWORDS:  
