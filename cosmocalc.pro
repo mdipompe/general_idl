@@ -48,7 +48,7 @@ d_h=(c/H0_conv)*(1./3.0859E19)
 t_h=(1./H0_conv)*(1./3600.)*(1./24.)*(1./365.)
 
 ;MAD Integrate
-zvals=findgen(z*10000.)/10000.
+zvals=dindgen(z*10000.)/10000.
 E=1./SQRT(omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+omega_l)
 E2=1./((1.+zvals)*SQRT(Omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+Omega_l))
 y=int_tabulated(zvals,E,/double)
