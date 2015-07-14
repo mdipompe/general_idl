@@ -5,7 +5,7 @@
 ;    Get start/end/elapsed time for a running code
 ;
 ;  USE:
-;    time=code_timer(st=st,/fin,unit='h')   
+;    time=timer(st=st,/fin,unit='h')   
 ;
 ;  INPUT:
 ;    
