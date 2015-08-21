@@ -48,7 +48,7 @@ d_h=(c/H0_conv)*(1./3.0859E19)
 t_h=(1./H0_conv)*(1./3600.)*(1./24.)*(1./365.)
 
 ;MAD Integrate
-zvals=dindgen(z*10000.)/10000.
+IF (z LT 10.) THEN zvals=dindgen(z*100000.)/100000. ELSE zvals=dindgen(z*10000.)/10000.
 E=1./SQRT(omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+omega_l)
 E2=1./((1.+zvals)*SQRT(Omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+Omega_l))
 y=int_tabulated(zvals,E,/double)
@@ -77,7 +77,7 @@ IF Omega_k LT 0 THEN v_c=((4.*!dpi*d_h^3.)/(2.*omega_k))*(((d_m/d_h)*SQRT(1.+ome
 t_l=t_h*y2*(1e-9)
 
 ;MAD Build return structure
-dists={d_h:0., d_m:0., d_L:0., d_a:0., d_c:0., v_c:0., t_l:0., t_h:0.}
+dists={d_h:0.D, d_m:0.D, d_L:0.D, d_a:0.D, d_c:0.D, v_c:0.D, t_l:0.D, t_h:0.D}
 dists=replicate(dists,n_elements(z))
 dists.d_h=d_h
 dists.d_m=d_m
