@@ -24,6 +24,7 @@
 ;  HISTORY:
 ;    2013 - Written - MAD (UWyo)
 ;    2015 - Cleaned and documented - MAD (UWyo)
+;    11-17-2015 - Added area to output polygon - MAD (Dartmouth)
 ;-
 FUNCTION make_circle_poly,ra,dec,radius,weight=weight
   IF ~keyword_set(weight) THEN weight=1
@@ -37,6 +38,7 @@ FUNCTION make_circle_poly,ra,dec,radius,weight=weight
   (*region.caps)[0]=cap
   region.use_caps=1
   region.weight=weight
-
+  region.str=garea(region)
+  
   return,region
 END
