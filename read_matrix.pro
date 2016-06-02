@@ -5,7 +5,7 @@
 ;    read in a matrix from a text file
 ;
 ;  USE:
-;    matrix = read_square_matrix('filename.txt')           
+;    matrix = read_matrix('filename.txt')           
 ;
 ;  INPUT:
 ;    file - string name of file to read
