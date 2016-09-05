@@ -19,14 +19,14 @@
 FUNCTION read_matrix,file
 
   ;Get dimensions by counting number of lines
-  openr,1,file
-  WHILE (not EOF(1)) DO BEGIN
+  openr,lun,file,/get_lun
+  WHILE (not EOF(lun)) DO BEGIN
      line=''
-     readf,1,line
+     readf,lun,line
      xx=strsplit(line,' ',/extract)
      IF (n_elements(C) EQ 0) THEN C=double(xx) ELSE C=[[C],[double(xx)]]
   ENDWHILE
-  close,1
+  close,lun
 
   return,C
 END
