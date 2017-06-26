@@ -19,15 +19,17 @@
 ;NOTES
 ;
 ;HISTORY
-;   11-2-16 - Written - MAD (UWyo)
+;   11-2-16 - Written - MAD (UWyo) (From Coyote's website!)
 ;-
-FUNCTION rand_indices, input_length, n_out
+FUNCTION rand_indices, input_length, n_out, seed=seed
   swap = n_out gt input_length/2
   IF swap THEN n = input_length-n_out ELSE n = n_out
   inds = LonArr(n, /NOZERO)
   M = n
   WHILE n GT 0 DO BEGIN
-     inds[M-n] = Long( RandomU(seed, n)*input_length)
+     IF keyword_set(seed) THEN $
+        inds[M-n] = Long( RandomU(seed, n)*input_length) ELSE $
+           inds[M-n] = Long( RandomU(systime_seed, n)*input_length)
      inds = inds[Sort(inds)]
      u = Uniq(inds)
      n = M-n_elements(u)
