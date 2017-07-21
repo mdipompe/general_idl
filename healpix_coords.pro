@@ -29,7 +29,7 @@ PRO healpix_coords,nside,long,lat,coord=coord,outfile=outfile,$
                    format=format
 
 IF ~keyword_set(coord) THEN coord='G'
-IF ~kewyord_set(format) THEN format='nest'
+IF ~keyword_set(format) THEN format='nest'
 
 npix=12.D*(nside^2.)
 pixnum=lindgen(npix)
