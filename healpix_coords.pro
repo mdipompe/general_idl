@@ -15,20 +15,26 @@
 ;            that native HEALPix is galactic
 ;    outfile - string name of file to write results to
 ;
+;  KEYWORDS:
+;    format - format of healpix map, 'nest' (default) or 'ring'
 ;  OUTPUT:
 ;    long
 ;    lat
 ;
 ;  HISTORY:
 ;    5-27-15 - Written - MAD (UWyo)
+;    7-21-17 - Added nest/ring keywords - MAD (Dartmouth)
 ;-
-PRO healpix_coords,nside,long,lat,coord=coord,outfile=outfile
+PRO healpix_coords,nside,long,lat,coord=coord,outfile=outfile,$
+                   format=format
 
 IF ~keyword_set(coord) THEN coord='G'
+IF ~kewyord_set(format) THEN format='nest'
 
 npix=12.D*(nside^2.)
 pixnum=lindgen(npix)
-pix2ang_nest,nside,pixnum,theta,phi
+IF (format EQ 'nest') THEN pix2ang_nest,nside,pixnum,theta,phi
+IF (format EQ 'ring') THEN pix2ang_ring,nside,pixnum,theta,phi
 
 l=phi*(180./!dpi)
 b=90.-(theta*(180./!dpi))
