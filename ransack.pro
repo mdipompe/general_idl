@@ -19,6 +19,8 @@
 ;OPTIONAL INPUTS
 ;   seed - Seed for random number generator.  Defaults to generating
 ;          random integer from 1 to 1000 using systime_seed.
+;   precision - number of digits beyond the decimal place to
+;               use. Defaults to 9.
 ;
 ;OUTPUTS
 ;
@@ -28,18 +30,18 @@
 ;
 ;HISTORY
 ;   1-5-15 - Written - MAD (UWyo)
+;  7-24-17 - Added precision keyword - MAD (Dartmouth)
 ;-
-PRO ransack,n,polyfile,outfile,seed=seed
+PRO ransack,n,polyfile,outfile,seed=seed,precision=precision
 
-;MAD Generate seed if not set
-IF ~keyword_set(seed) THEN BEGIN
-   seed = ceil(randomu(systime_seed)*1000)
-ENDIF
+;MAD Set defaults
+IF ~keyword_set(seed) THEN seed = ceil(randomu(systime_seed)*1000)
+IF ~keyword_set(precision) THEN precision=9
 
 ;MAD Make string command to run
-
 cmd=[filepath('ransack', root_dir=getenv('MANGLEBINDIR')), $
-     '-c',strtrim(seed,2), '-r',strtrim(n,2),$
+     '-c',strtrim(seed,2), '-r',strtrim(fix(n),2), $
+     '-p',strtrim(fix(precision),2), $
      polyfile,outfile]
 
 print,'Running RANSACK with command: '
