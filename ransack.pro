@@ -40,7 +40,7 @@ IF ~keyword_set(precision) THEN precision=9
 
 ;MAD Make string command to run
 cmd=[filepath('ransack', root_dir=getenv('MANGLEBINDIR')), $
-     '-c',strtrim(seed,2), '-r',strtrim(fix(n),2), $
+     '-c',strtrim(seed,2), '-r',strtrim(long(n),2), $
      '-p',strtrim(fix(precision),2), $
      polyfile,outfile]
 
