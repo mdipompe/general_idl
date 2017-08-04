@@ -1,7 +1,7 @@
 PRO coords2sphere,long,lat,phi,theta,coords=coords
 
   ;Take coordinates and convert to phi and theta on the sphere,  
-  ;where 0 < phi < 360 and 0 < theta < 180. Assumes input coords are
+  ;where 0 < phi < 2pi and 0 < theta < pi. Assumes input coords are
   ;equatorial, unless spcified otherwise (using coords keyword).
   ;Useful for passing coordinates to healpix routines.
   
