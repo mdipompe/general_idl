@@ -1,6 +1,6 @@
 ;+
 ;NAME
-;   ransack
+;   pixelize
 ;
 ;PURPOSE
 ;   IDL wrapper for MANGLE function pixelize, which splits up
