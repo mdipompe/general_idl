@@ -7,12 +7,12 @@ FUNCTION new_sample,data,errs,n=n,seed=seed
   
   IF ~keyword_set(n) THEN BEGIN
      IF ~keyword_set(seed) THEN $
-        out=(randomn(systime_seed,n_elements(data))*errs)+data ELSE $
-           out=(randomn(seed,n_elements(data))*errs)+data
+        out=(randomn(systime_seed,n_elements(data),/double)*errs)+data ELSE $
+           out=(randomn(seed,n_elements(data),/double)*errs)+data
   ENDIF ELSE BEGIN
      IF ~keyword_set(seed) THEN $
-        out=(randomn(systime_seed,n_elements(data),n)*rebin(errs,n_elements(data),n))+rebin(data,n_elements(data),n) ELSE $
-           out=(randomn(seed,n_elements(data),n)*rebin(errs,n_elements(data),n))+rebin(data,n_elements(data),n)
+        out=(randomn(systime_seed,n_elements(data),n,/double)*rebin(errs,n_elements(data),n))+rebin(data,n_elements(data),n) ELSE $
+           out=(randomn(seed,n_elements(data),n,/double)*rebin(errs,n_elements(data),n))+rebin(data,n_elements(data),n)
   ENDELSE
   
   return,out
