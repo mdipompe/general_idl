@@ -5,15 +5,12 @@
 ;    Get cosmological distances, etc.
 ;
 ;  USE:
-;    res=cosmocalc(z,h=h,om=om,lambda=lambda)
+;    res=cosmocalc(z)
 ;
 ;  INPUT:
 ;    z - redshift
 ;
 ;  OPTIONAL INPUT:
-;    h - little h (H_0/100). Defaults to 0.71
-;    om - omega_matter.  Defaults to 0.27
-;    lambda - omega_lambda. Defaults to 0.73
 ;    
 ;  KEYWORDS:
 ;        
@@ -30,17 +27,18 @@
 ;    2013 - Written - MAD (UWyo)
 ;    2015 - Cleaned and documented - MAD (UWyo)
 ;    1-25-16 - Fixed z=0 Bug - MAD (Dartmouth)
+;    12-1-17 - Updated to use common block set in load_cosmology.pro
 ;-
-FUNCTION cosmocalc,z,h=h,om=om,lambda=lambda
+FUNCTION cosmocalc,z
 
+COMMON cosmological_parameters
+  
 ;MAD Set speed of light, in km/s
 c=2.99792458E5
 
-;MAD Set defaults
-IF ~keyword_set(h) THEN H0=71. ELSE H0=h*100.
-IF ~keyword_set(om) THEN omega_m=0.27 ELSE omega_m=om
-IF ~keyword_set(lambda) THEN omega_l=0.73 ELSE omega_l=lambda
+;MAD Get curvature, set H0
 omega_k=1.-omega_m-omega_l
+H0=h*100.
 
 ;MAD Convert hubble constant to units of s^-1, calculate hubble distance
 ;(Mpc) and hubble time (yrs)
@@ -60,7 +58,7 @@ ENDIF ELSE BEGIN    ;MAD If z NE 0, integrate.
    ;MAD Integrate
    IF (z LT 10.) THEN zvals=dindgen(z*100000.)/100000. ELSE zvals=dindgen(z*10000.)/10000.
    E=1./SQRT(omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+omega_l)
-   E2=1./((1.+zvals)*SQRT(Omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+Omega_l))
+   E2=1./((1.+zvals)*SQRT(omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+Omega_l))
    y=int_tabulated(zvals,E,/double)
    y2=int_tabulated(zvals,E2,/double)
 
