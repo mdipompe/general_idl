@@ -32,7 +32,7 @@
 FUNCTION cosmocalc,z
 
 COMMON cosmological_parameters
-  
+
 ;MAD Set speed of light, in km/s
 c=2.99792458E5
 
