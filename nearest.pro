@@ -1,13 +1,13 @@
 ;+
 ;  NAME:
-;    closest2d
+;    nearest
 ;
 ;  PURPOSE:
 ;    Given arrays x and y, find indices of values in y closest to each
 ;    value in x
 ;
 ;  USE:
-;    indx=closest2d(x,y)
+;    indx=nearest(x,y)
 ;
 ;  INPUT:
 ;    x - array of values to find closest matches to
@@ -26,7 +26,7 @@
 ;  HISTORY:
 ;    12-5-2017 - Written - MAD (Dartmouth)
 ;-
-FUNCTION closest2D,x,y
+FUNCTION nearest,x,y
 
   ;MAD Sort y so value locate works
   newy=y[bsort(y)]
