@@ -29,7 +29,7 @@
 ;    1-25-16 - Fixed z=0 Bug - MAD (Dartmouth)
 ;    12-1-17 - Updated to use common block set in load_cosmology.pro
 ;-
-FUNCTION cosmocalc,z
+FUNCTION cosmocalc,z,d_l=d_l,d_a=d_a,d_c=d_c,v_c=v_c,t_l=t_l
 
 COMMON cosmological_parameters
 
@@ -47,7 +47,7 @@ d_h=(c/H0_conv)*(1./3.0859E19)
 t_h=(1./H0_conv)*(1./3600.)*(1./24.)*(1./365.)
 
 ;MAD IF z=0, then all distances are 0.
-IF (z EQ 0.) THEN BEGIN
+IF (max(z) EQ 0.) THEN BEGIN
    d_m=0.
    d_L=0.
    d_a=0.
@@ -56,12 +56,17 @@ IF (z EQ 0.) THEN BEGIN
    t_l=0.
 ENDIF ELSE BEGIN    ;MAD If z NE 0, integrate.
    ;MAD Integrate
-   IF (z LT 10.) THEN zvals=dindgen(z*100000.)/100000. ELSE zvals=dindgen(z*10000.)/10000.
+   IF (max(z) LT 10.) THEN zvals=dindgen(max(z)*100000.)/100000. ELSE zvals=dindgen(max(z)*10000.)/10000.
    E=1./SQRT(omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+omega_l)
    E2=1./((1.+zvals)*SQRT(omega_m*((1+zvals)^(3.0))+Omega_k*((1+zvals)^(2.0))+Omega_l))
-   y=int_tabulated(zvals,E,/double)
-   y2=int_tabulated(zvals,E2,/double)
 
+   y=fltarr(n_elements(z))
+   y2=y
+   FOR i=0L,n_elements(y)-1 DO BEGIN
+      y[i]=int_tabulated(zvals[where(zvals LE z[i])],E[where(zvals LE z[i])],/double)
+      y2[i]=int_tabulated(zvals[where(zvals LE z[i])],E2[where(zvals LE z[i])],/double)
+   ENDFOR
+   
    ;MAD Find comoving distance
    d_c=d_h*y
 
