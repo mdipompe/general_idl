@@ -29,7 +29,7 @@
 ;    1-25-16 - Fixed z=0 Bug - MAD (Dartmouth)
 ;    12-1-17 - Updated to use common block set in load_cosmology.pro
 ;-
-FUNCTION cosmocalc,z,d_l=d_l,d_a=d_a,d_c=d_c,v_c=v_c,t_l=t_l
+FUNCTION cosmocalc,z,d_h=d_h,d_l=d_l,d_a=d_a,d_c=d_c,v_c=v_c,t_l=t_l
 
 COMMON cosmological_parameters
 
