@@ -5,13 +5,9 @@ FUNCTION wmedian,data,weights=weights
   sweights=weights[bsort(data)]
   sdata=data[bsort(data)]
   totw=total(sweights)
-  totsofar=sweights[0]
-  i=1L
-  WHILE (totsofar LE totw/2.) DO BEGIN
-     totsofar=totsofar+sweights[i]
-     i=i+1
-  ENDWHILE
-  meddata=sdata[i-1]
+  cumtot=total(sweights,/cum)
+  xx=where(cumtot GT total(sweights)/2.)
+  meddata=sdata[xx[0]]
 
- return,meddata
+  return,meddata
 END
